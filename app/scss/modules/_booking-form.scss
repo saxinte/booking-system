@@ -1,0 +1,27 @@
+/* Booking Form
+----------------------------------------- */
+.booking-form {
+	padding:0 0.75rem;
+}
+.booking-form__label {
+	display:block;
+	font-size:0.875rem;
+	color:#333;
+	margin-bottom:0.5rem;
+}
+.booking-form .form-group {
+	margin-bottom:1rem;
+}
+.booking-form .input,
+.booking-form .select {
+	width:100%;
+}
+
+/* MQ Medium */
+@include mq('medium'){
+	.booking-form {
+		float:left;
+		width:50%;
+		padding:0 1rem;
+	}
+}

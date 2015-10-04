@@ -1,0 +1,62 @@
+/*
+---
+name: getBreakPoint
+description: returns a breakpoint value from a string ('small', 'medium' or 'large')
+...
+*/
+@function getBreakPoint($size) {
+    
+    $bp:null;
+
+    // if no size is passed, throw a warning
+    @if ($size == null) {
+        @warn "mq(): Breakpoint size is null";
+    }
+
+    @else if ($size == small) {
+        $bp: $mq-small-bp;
+    }
+    @else if ($size == medium) {
+        $bp: $mq-medium-bp;
+    }
+    @else if ($size == large) {
+        $bp: $mq-large-bp;
+    }
+    @else {
+        // if no BP is found, throw a warning
+        @warn "mq(): Breakpoint "#{$size}" does not exist";
+    }
+
+    @return $bp;
+
+}
+
+/*
+---
+name: MediaQueries Mixin
+description: useful to manage media queries and keep it maintainable
+...
+*/
+@mixin mq($size:null, $media:all, $feature:min-width, $orientation:null) {
+
+    $mediaQuery: null;
+    $bp: getBreakPoint($size);
+    $remValue: null;
+
+    @if ($feature == 'max-width'){
+        $remValue: parseInt($bp / $pixelBase) + 'em';
+    }@else {
+        $remValue: parseInt( ($bp + 1px) / $pixelBase ) + 'em';
+    }
+    
+    @if ($orientation != null){
+        $mediaQuery: '#{$media} and (#{$feature}: #{$remValue}) and (orientation: #{$orientation})';
+    }@else {
+        $mediaQuery: '#{$media} and (#{$feature}: #{$remValue})';
+    }
+
+    @media #{$mediaQuery} {
+        @content;
+    }
+
+}

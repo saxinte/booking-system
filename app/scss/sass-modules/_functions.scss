@@ -1,0 +1,10 @@
+/*
+---
+name: parseInt
+description: returns a number from a string
+source: http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+...
+*/
+@function parseInt($n) {
+	@return $n / ($n * 0 + 1);
+}

@@ -1,0 +1,43 @@
+/* Index Page intro
+----------------------------------------- */
+.intro-container {
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	z-index: 1;
+	background:url('../img/st-pancras.jpg') no-repeat center center #FF5A5B;
+	background-size:cover;
+}
+.intro-container__box {
+	position:absolute;
+	top:50%;
+	left:50%;
+	width:14.5rem;
+	height:7rem;
+	margin:-3.5rem 0 0 -7.25rem;
+	padding:1rem 1rem 0;
+	background-color:#FFF;
+	border-radius:0.125rem;
+	text-align:center;
+}
+.intro-container .title {
+	margin:0 0 1rem 0;
+	font-size:1.25rem;
+	color:#FF5A5B;
+	text-align:center;
+	text-transform:uppercase;
+}
+
+/* MQ Medium */
+@include mq('medium'){
+	.intro-container__box {
+		width:22rem;
+		height:7.5rem;
+		margin:-3.75rem 0 0 -11rem;
+	}
+	.intro-container .title {
+		font-size:2rem;
+	}
+}

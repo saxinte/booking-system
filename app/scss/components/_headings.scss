@@ -1,0 +1,22 @@
+/* Headings
+----------------------------------------- */
+.main-title {
+	margin:0 0 1rem 0;
+	padding-bottom:0.5rem;
+	font-size:1.25rem;
+	color:#FF5A5B;
+	border-bottom:0.125rem solid #CCC;
+}
+.second-title {
+	margin:0 0 0.75rem 0;
+	font-size:1rem;
+	color:#FF5A5B;
+	font-weight:normal;
+}
+
+/* MQ Medium */
+@include mq('medium'){
+	.main-title  {
+		font-size:2rem;
+	}
+}

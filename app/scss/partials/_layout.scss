@@ -1,0 +1,15 @@
+/* Layout
+----------------------------------------- */
+
+.page-wrap {
+	padding-left:0.5rem;
+	padding-right:0.5rem;
+}
+
+/* MQ Medium */
+@include mq('medium'){
+	.page-wrap {
+		margin:0 auto;
+		max-width:60rem;
+	}
+}
