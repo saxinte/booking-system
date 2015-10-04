@@ -13,3 +13,6 @@ This app provide a booking page. A person can book a train seat using this app. 
 - Then you will need to install all Node dependencies using `npm install`.
 - Then hit the following command: `gulp`. This will start the build.
 -  Then open the `index.html` located in /dist/html/.
+
+## How to test (not ready, karma-browserify is missing)
+- Tests should then run using `karma start`.
