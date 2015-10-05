@@ -7,6 +7,7 @@ var watchify = require('watchify');
 var source = require('vinyl-source-stream');
 var gutil = require('gulp-util');
 var del = require('del');
+var webserver = require('gulp-webserver');
 
 /*
  * Path Storage
@@ -104,6 +105,15 @@ gulp.task('scss', function () {
     .pipe(gulp.dest(paths.dist + 'css/'));
 });
 
+gulp.task('serve', function(){
+    gulp.src(paths.dist)
+    .pipe(webserver({
+      livereload: false,
+      directoryListing: false,
+      open: true
+    }));
+});
+
 gulp.task('browserify', function(){
     buildScript(false);
 });
@@ -122,4 +132,4 @@ gulp.task('scss:watch', function () {
     setWatcherListener(watcher);
 });
 
-gulp.task('default', ['clean', 'scss', 'browserify', 'copyHTML', 'copyIMG', 'html:watch', 'scss:watch', 'watchify']);
+gulp.task('default', ['clean', 'scss', 'browserify', 'copyHTML', 'copyIMG', 'html:watch', 'scss:watch', 'watchify', 'serve']);
