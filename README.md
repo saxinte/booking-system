@@ -10,8 +10,8 @@ This app provide a booking page. A person can book a train seat using this app. 
 
 ## How to install
 - First, fork this repo on a local server.
-- Then you will need to install all Node dependencies using `npm install`.
-- Then hit the following command: `gulp` (be sure to have gulp installed globally, if not, please install it with `npm install -g gulp`).
+- Then you will need to install all Node dependencies using `npm install`. (Tested with Node 4.1.1)
+- Then hit the following command: `gulp` (be sure to have gulp installed globally, if not, please install it with `sudo npm install -g gulp`).
 - This will start the build.
 - Then open the `index.html` located in /dist/html/.
 
