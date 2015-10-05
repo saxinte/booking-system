@@ -50,9 +50,8 @@ module.exports = (function(global, doc, undefined) {
 
     var selectHandler = function() {
         var numberOfSeats = parseInt(this.value);
-        if(numberOfSeats > 0){
-            CurrentCar.requestSeats(numberOfSeats);
-        }
+        numberOfSeats = numberOfSeats > 0 ? numberOfSeats : null;
+        CurrentCar.requestSeats(numberOfSeats);
     };
 
     var requestSeatsManually = function() {

@@ -73,49 +73,109 @@ module.exports = (function(global, doc, undefined) {
      * Set seats in the database
      */
     var sendRequestedSeats = function(callback) {
-        CarInstance.requestSeats(selectedSeats, callback);
+        if(selectedSeats.length){
+            CarInstance.requestSeats(selectedSeats, callback);
+        }else {
+            callback({
+                code: 'error'
+            })
+        }
     };
 
     /*
-     * Display requested seats in current car
+     * Store/Delete selected seats
+     */
+    var storeSeat = function(seatObject) {
+        seatObject.status = 1;
+        selectedSeats.push(seatObject);
+    };
+
+    var deleteSeat = function(seatObject) {
+        var found = selectedSeats.indexOf(seatObject);
+        if(found !== -1){
+            selectedSeats.splice(found, 1);
+        }
+    };
+
+    var isSeatEmpty = function(seatObject) {
+        return seatObject.status === 0;
+    };
+
+    /*
+     * Display requested seats in current car from dropdown list
      * @param: [Integer]
      */
     var requestSeats = function(number) {
 
         selectedSeats.length = 0; // reset selected seat on each new request
+        seatsCloneAuto = createCloneSeats(CarInstance.seats); // create a new temporary seat view
 
-        var seats = _.map(CarInstance.seats, _.clone),
-            foundsCounter = 0;
+        if(number > 0){
+            var foundsCounter = 0;
+            for(var i = 0, l = seatsCloneAuto.length; i<l; i++){
 
-        for(var i = 0, l = seats.length; i<l; i++){
+                if(foundsCounter === number){
+                    break;
+                }
 
-            if(foundsCounter === number){
-                break;
-            }
+                var empty = isSeatEmpty(seatsCloneAuto[i]);
+                if(empty){
+                    storeSeat(seatsCloneAuto[i]);
+                    foundsCounter++;
+                }
 
-            var status = seats[i].status;
-            if(status === 0){
-                seats[i].status = 1;
-                selectedSeats.push(seats[i]);
-                foundsCounter++;
             }
         }
 
-        displaySeats(trainCar, seats, CarInstance.options.seatsPerRow);
+        displaySeats(trainCar, seatsCloneAuto, CarInstance.options.seatsPerRow);
 
     };
 
+    /*
+     * Display clicked selected seats from the carriage
+     * @param: [Integer]
+     */
     var requestSeatsManually = function(number) {
 
-        for(var i = 0, l = seatsClone.length; i<l; i++){
-            if( (seatsClone[i].status === 0) && (seatsClone[i].id === number) ){
-                seatsClone[i].status = 1;
-                selectedSeats.push(seatsClone[i]);
-                break;
-            }
+        // if previous seats was requested using dropdow, reset
+        if(seatsCloneAuto.length){
+            selectedSeats.length = 0; 
+            seatsCloneAuto.length = 0;
+            seatsCloneManual = createCloneSeats();
         }
-        displaySeats(trainCar, seatsClone, CarInstance.options.seatsPerRow);
 
+        for(var i = 0, l = seatsCloneManual.length; i<l; i++){
+
+            // Find seat in carriage
+            if(seatsCloneManual[i].id === number){
+
+                var empty = isSeatEmpty(seatsCloneManual[i]);
+
+                // Store it, if empty
+                if(empty){
+                    storeSeat(seatsCloneManual[i]);
+
+                // If unselected, unstore it
+                }else if(seatsCloneManual[i].status === 1){
+                    seatsCloneManual[i].status = 0;
+                    deleteSeat(seatsCloneManual[i]);
+                }
+
+                break; // Seat has been found
+            }
+            
+        }
+
+        displaySeats(trainCar, seatsCloneManual, CarInstance.options.seatsPerRow);
+
+    };
+
+    /*
+     * Returns a clone of current database seats
+     * @param: [Array]
+     */
+    var createCloneSeats = function() {
+        return _.map(CarInstance.seats, _.clone);
     };
 
     /*
@@ -123,7 +183,7 @@ module.exports = (function(global, doc, undefined) {
      */
     var onCarReady = function(instance) {
         CarInstance = instance;
-        seatsClone = _.map(CarInstance.seats, _.clone);
+        seatsCloneManual = createCloneSeats();
         displaySeats(trainCar, CarInstance.seats, CarInstance.options.seatsPerRow);
         Apollo.removeClass(trainCar, 'booking-view__car--loading');
     };
@@ -142,10 +202,11 @@ module.exports = (function(global, doc, undefined) {
     };
 
     // Private vars
-    var CarInstance = null;
-    var selectedSeats = [];
-    var seatsClone = [];
-    var trainCar = doc.getElementById('train-car');
+    var CarInstance = null,
+        selectedSeats = [],
+        seatsCloneManual = [],
+        seatsCloneAuto = [],
+        trainCar = doc.getElementById('train-car');
 
     return {
         init: init,
