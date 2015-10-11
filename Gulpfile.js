@@ -7,6 +7,7 @@ var watchify = require('watchify');
 var source = require('vinyl-source-stream');
 var gutil = require('gulp-util');
 var del = require('del');
+var ghPages = require('gulp-gh-pages');
 
 /*
  * Path Storage
@@ -21,7 +22,7 @@ var paths = {
 
 /*
  * Gulp Logs
- * @param: String, Boolean 
+ * @param: String, Boolean
  */
 function gulpLog(log, error) {
     if(error){
@@ -39,7 +40,7 @@ function setWatcherListener(watcher) {
 
 /*
  * Browserify
- * @param: Boolean 
+ * @param: Boolean
  * infos: Returns a Browserify or Watchify instance
  */
 function buildScript(watch) {
@@ -63,7 +64,7 @@ function buildScript(watch) {
         entries: paths.js + 'main.js',
         debug: true
     };
-   
+
     if(watch){
         props.cache = {};
         props.packageCache = {};
@@ -120,6 +121,12 @@ gulp.task('html:watch', function() {
 gulp.task('scss:watch', function () {
     var watcher =  gulp.watch(paths.scss + '/**/*.scss', ['scss']);
     setWatcherListener(watcher);
+});
+
+/* Deploy dist to gh-pages branch */
+gulp.task('deploy', function() {
+  return gulp.src('./dist/**/*')
+    .pipe(ghPages());
 });
 
 gulp.task('default', ['clean', 'scss', 'browserify', 'copyHTML', 'copyIMG', 'html:watch', 'scss:watch', 'watchify']);
