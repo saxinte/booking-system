@@ -15,5 +15,5 @@ This app provide a booking page. A person can book a train seat using this app. 
 - This will start the build.
 - Then open the `index.html` located in /dist/html/.
 
-## How to test (not ready, karma-browserify is missing)
-- Tests should then run using `karma start`.
+## How to test
+- Tests can be start using `karma start`.
