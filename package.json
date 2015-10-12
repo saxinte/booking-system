@@ -5,6 +5,9 @@
   "main": "Gulpfile.js",
   "author": "Sebastien Axinte",
   "license": "ISC",
+  "scripts": {
+    "start": "gulp"
+  },
   "devDependencies": {
     "browserify": "^11.2.0",
     "del": "^2.0.2",
@@ -12,6 +15,7 @@
     "gulp": "^3.9.0",
     "gulp-copy": "0.0.2",
     "gulp-sass": "^2.0.4",
+    "gulp-webserver": "^0.9.0",
     "gulp-util": "^3.0.6",
     "karma": "^0.13.10",
     "karma-browserify": "^4.4.0",
