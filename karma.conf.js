@@ -10,24 +10,27 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'expect'],
+    frameworks: ['mocha', 'expect', 'browserify'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      {pattern: './app/**/*.js', included:true},
-      {pattern: './test/*.js', included:true}
+      './test/*Spec.js'
     ],
-
-    // list of files to exclude
-    exclude: [
-    ],
-
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      './test/*Spec.js': [ 'browserify' ]
     },
+ 
+    browserify: {
+      debug: true
+    },
+
+    // list of files to exclude
+    exclude: [
+    ],
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
