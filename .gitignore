@@ -7,3 +7,6 @@ npm-debug.log
 
 #APP
 dist
+
+#TMP
+.publish
