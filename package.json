@@ -5,6 +5,9 @@
   "main": "Gulpfile.js",
   "author": "Sebastien Axinte",
   "license": "ISC",
+  "dependencies": {
+    "apollo.js": "git+https://github.com/toddmotto/apollo.git#1.7.0"
+  },
   "devDependencies": {
     "browserify": "^11.2.0",
     "del": "^2.0.2",

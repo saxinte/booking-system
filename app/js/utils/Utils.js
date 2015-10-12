@@ -1,5 +1,5 @@
 'use strict';
-var Apollo = require('../utils/Apollo.js');
+var Apollo = require('apollo.js');
 var Utils = {};
 
 /*
